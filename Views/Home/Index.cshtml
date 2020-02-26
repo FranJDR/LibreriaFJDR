@@ -1,0 +1,52 @@
+﻿@using LibreriaFJDR.Models;
+
+@{
+    ViewBag.Title = "Catalogo";
+    List<Libro> libros = new LogicaLibro().ObtenerLibros();
+}
+
+<head>
+    <link rel="stylesheet" href="~/Content/StyleIndex.css" />
+</head>
+
+<div class="contenedorCard">
+
+    @foreach (Libro item in libros)
+    {
+        <div class="card">
+            <div class="imagen">
+                <img src=@item.IMG />
+
+            </div>
+            <div class="contenido">
+                <h4> @item.Titulo </h4>
+
+                <hr />
+                <p> @item.Sinopsis</p>
+                <div class="flex-container">
+                    <div>Autor : @item.Autor</div>
+                    <div>Nº de Paginas : @item.Paginas</div>
+                    <div>Precio : @item.Precio€</div>
+                    <div>Stock : @item.Unidades</div>
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    using (Html.BeginForm("AgregarCarrito", "Home", FormMethod.Get))
+                    {
+                        @Html.Hidden("isbn", @item.ISBN)
+                        <input type="submit" class="btn btn-default" style="border: 1px solid black;margin-top:10px;width:100%;" value="Añadir al Carrito" />
+                    }
+                }
+                else
+                {
+                    <label>Debes iniciar sesion para poder comprar</label>
+                }
+            </div>
+        </div>
+    }
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

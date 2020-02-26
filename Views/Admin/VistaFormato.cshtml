@@ -1,0 +1,70 @@
+﻿@using LibreriaFJDR.Models;
+@{
+    List<Formato> formatos = new LogicaFormato().ObtenerFormatos();
+}
+<head>
+    <link rel="stylesheet" href="~/Content/StyleFormatoEstado.css" />
+</head>
+
+<h2>FORMATO</h2>
+@model LibreriaFJDR.Models.Formato
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("AgregarFormato", "Admin", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Agregar Formato" class="btn btn-default" style=" border: 1px solid black;" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+
+
+<br />
+
+
+
+<table style=" width: 100% ">
+
+    <tr>
+        <th>ID</th>
+        <th>FORMATO</th>
+        <th>OPERACION</th>
+    </tr>
+
+    @foreach (Formato item in formatos)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Nombre</td>
+            <td>
+                @using (Html.BeginForm("EliminarFormato", "Admin", FormMethod.Get))
+                {
+                    @Html.Hidden("id", item.Id)
+                    <input type="submit" value="ELIMINAR" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

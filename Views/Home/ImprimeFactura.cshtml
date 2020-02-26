@@ -1,0 +1,80 @@
+﻿@using LibreriaFJDR.Models;
+@using Microsoft.AspNet.Identity;
+
+@{
+    Layout = null;
+    string user = ViewBag.user;
+    string email = ViewBag.email;
+    string direccion = ViewBag.direccion;
+    Factura factura = new Factura(user);
+}
+
+<head>
+    <link rel="stylesheet" href="~/Content/StyleCarrito.css" />
+    <style>
+        /* SOLUCIONA PROBLEMA DE SOLAPAMIENTO EN TABLAS <table /> */
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-row-group
+        }
+
+        tr {
+            page-break-inside: avoid
+        }
+
+        * {
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<img style="width: 175px; height:130px" src="~/img/logo.png" />
+
+<br />
+<br />
+
+<div> Cliente : @email</div>
+<div> Direccion : @direccion</div>
+<div><label class="col-md-2 control-label">Precio total de la factura : @factura.PrecioTotal € </label></div>
+
+<table style=" width: 100% ">
+
+    <tr>
+        <th>PORTADA</th>
+        <th>ISBN</th>
+        <th>TITULO</th>
+        <th>AUTOR</th>
+        <th>PRECIO</th>
+        <th>UNIDADES</th>
+        <th>PRECIO TOTAL</th>
+    </tr>
+
+    @foreach (Libro item in factura.Libros)
+    {
+        <tr>
+            <td><img src=@item.IMG /></td>
+            <td>@item.ISBN</td>
+            <td>@item.Titulo</td>
+            <td>@item.Autor</td>
+            <td>@item.Precio €</td>
+            <td>@factura.ObtenerCantidad(item.ISBN)</td>
+            @{
+                float preciototal = factura.ObtenerCantidad(item.ISBN) * item.Precio;
+            }
+            <td class="precioTotal">@preciototal</td>
+
+        </tr>
+    }
+
+</table>
+
+<br />
+<br />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

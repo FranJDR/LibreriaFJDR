@@ -1,0 +1,57 @@
+﻿
+body {
+    /*background-color: rgb(252,229,149);*/
+}
+
+table {
+    text-align: center;
+    font-family: monospace;
+    font-size: 16px;
+    background-color: white;
+}
+
+th {
+    text-align: center;
+    font-family: monospace;
+    padding: 10px;
+    /*border: 1px solid black;*/
+}
+
+td {
+    border-top: 1px solid black;
+    padding: 10px;
+}
+
+tr {
+    text-align: center;
+    font-family: monospace;
+    border-top: 1px solid black;
+}
+
+.cajon {
+    float: left;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 25px;
+    display: inline-block;
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+}
+
+input {
+    display: inline-block;
+    width: 200px;
+    margin-bottom: 5px;
+}
+
+button {
+    width: 100%;
+}
+
+td img {
+    width: 45px;
+    height: 55px;
+}

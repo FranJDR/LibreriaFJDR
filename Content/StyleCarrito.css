@@ -1,0 +1,49 @@
+﻿table {
+    text-align: center;
+    font-family: monospace;
+    font-size: 16px;
+    background-color: white;
+    overflow: auto;
+    height: 100px;
+}
+
+th {
+    text-align: center;
+    font-family: monospace;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+}
+
+tr {
+    text-align: center;
+    font-family: monospace;
+    border-top: 2px solid black;
+}
+
+.operaciones {
+    display: flex;
+}
+
+    .operaciones input {
+        margin: 3px;
+    }
+
+img {
+    width: 45px;
+    height: 55px;
+}
+
+.precioTotal {
+    color: olivedrab;
+}
+
+.miFormulario {
+    display: flex;
+}
+
+    .miFormulario div {
+        margin: 5px;
+    }

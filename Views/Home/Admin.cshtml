@@ -1,0 +1,71 @@
+﻿@using LibreriaFJDR.Models;
+@{
+    List<Libro> libros = new LogicaLibro().ObtenerLibros();
+}
+<head>
+    <link rel="stylesheet" href="~/Content/StyleAdmin.css" />
+</head>
+
+<br />
+<div style="display: flex">
+    @using (Html.BeginForm("RedirigirAgregarLibro", "Admin", FormMethod.Get))
+    {
+        <input type="submit" value="AGREGAR LIBRO" class="btn btn-default" style="margin:5px;border: 1px solid black;" />
+    }
+    @using (Html.BeginForm("RedirigirVistaEstado", "Admin", FormMethod.Get))
+    {
+        <input type="submit" value="ESTADO" class="btn btn-default" style="margin:5px;border: 1px solid black;" />
+    }
+    @using (Html.BeginForm("RedirigirVistaFormato", "Admin", FormMethod.Get))
+    {
+        <input type="submit" value="FORMATO" class="btn btn-default" style="margin:5px;border: 1px solid black" />
+    }
+</div>
+<hr />
+
+<table style=" width: 100% ">
+
+    <tr>
+        <th>PORTADA</th>
+        <th>ISBN</th>
+        <th>TITULO</th>
+        <th>AUTOR</th>
+        <th>PRECIO</th>
+        <th>UNIDADES</th>
+        <th>OPERACIONES</th>
+    </tr>
+
+    @foreach (Libro item in libros)
+    {
+        <tr>
+            <td><img src=@item.IMG /></td>
+            <td>@item.ISBN</td>
+            <td>@item.Titulo</td>
+            <td>@item.Autor</td>
+            <td>@item.Precio €</td>
+            <td>@item.Unidades</td>
+
+            <td>
+
+                @using (Html.BeginForm("EliminarLibro", "Admin", FormMethod.Get))
+                {
+                    @Html.Hidden("isbn", item.ISBN)
+                    <input type="submit" value="ELIMINAR" />
+                }
+                @using (Html.BeginForm("RedirigirMofificarLibro", "Admin", FormMethod.Get))
+                {
+                    @Html.Hidden("isbn", item.ISBN)
+                    <input type="submit" value="MODIFICAR" />
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

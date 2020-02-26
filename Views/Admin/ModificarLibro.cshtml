@@ -1,0 +1,143 @@
+﻿@using LibreriaFJDR.Models;
+@model LibreriaFJDR.Models.Libro
+
+@{
+    string isbn = ViewBag.ISBN;
+    ViewBag.Title = "ModificarLibro";
+    Libro libro = new LogicaLibro().ObtenerLibro(ViewBag.ISBN);
+}
+
+<style>
+
+    .cajon {
+        font-family: monospace;
+        width: 100%;
+        float: left;
+        /*border: 1px solid black;*/
+        padding: 10px;
+        margin: 25px;
+        display: inline-block;
+    }
+
+    input {
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .prueba {
+        display: inline-block;
+    }
+
+    .cajonUno {
+        width: 100%;
+        display: inline-flex;
+    }
+
+        .cajonUno label {
+            border-bottom: 1px solid black;
+            width: 600px;
+        }
+</style>
+
+
+<div class="cajon">
+    <h2>Datos</h2>
+    <div class="cajonUno"><label>ISBN : </label><label>@libro.ISBN</label></div>
+    <div class="cajonUno"><label>TITULO : </label><label>@libro.Titulo</label></div>
+    <div class="cajonUno"><label>AUTOR : </label><label>@libro.Autor</label></div>
+    <div class="cajonUno"><label>SINOPSIS : </label><label>@libro.Sinopsis</label></div>
+    <div class="cajonUno"><label>PRECIO : </label><label>@libro.Precio</label></div>
+    <div class="cajonUno"><label>NºPAGINAS : </label><label>@libro.Paginas</label></div>
+    <div class="cajonUno"><label>ESTADO : </label><label>@libro.Estado</label></div>
+    <div class="cajonUno"><label>FORMATO : </label><label>@libro.Formato</label></div>
+    <div class="cajonUno"><label>UNIDADES : </label><label>@libro.Unidades</label></div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("EditarLibro", "Admin", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("isbn", isbn)
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Titulo, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Titulo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Titulo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Autor, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Autor, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Autor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Sinopsis, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Sinopsis, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Sinopsis, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Precio, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Precio, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Precio, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Unidades, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Unidades, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Unidades, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Paginas, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Paginas, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Paginas, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.IMG, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.IMG, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.IMG, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Formato, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("formato", (List<SelectListItem>)new LogicaFormato().ObtenerSelectList(), new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Estado, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("estado", (List<SelectListItem>)new LogicaEstado().ObtenerSelectList(), new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Modificar" class="btn btn-default" />
+                    </div>
+                </div>
+
+            }
+        </section>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

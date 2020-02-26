@@ -1,0 +1,66 @@
+﻿@using LibreriaFJDR.Models;
+@{
+    List<Estado> estados = new LogicaEstado().ObtenerEstados();
+}
+<head>
+    <link rel="stylesheet" href="~/Content/StyleFormatoEstado.css" />
+</head>
+
+<h2>ESTADO</h2>
+@model LibreriaFJDR.Models.Estado
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("AgregarEstado", "Admin", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Agregar Estado" class="btn btn-default" style=" border: 1px solid black;" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+<br />
+
+<table style=" width: 100% ">
+
+    <tr>
+        <th>ID</th>
+        <th>ESTADO</th>
+        <th>OPERACION</th>
+    </tr>
+
+    @foreach (Estado item in estados)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Nombre</td>
+            <td>
+                @using (Html.BeginForm("EliminarEstado", "Admin", FormMethod.Get))
+                {
+                    @Html.Hidden("id", item.Id)
+                    <input type="submit" value="ELIMINAR" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

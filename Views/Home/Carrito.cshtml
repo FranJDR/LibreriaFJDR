@@ -1,0 +1,85 @@
+﻿@using LibreriaFJDR.Models;
+@using Microsoft.AspNet.Identity;
+@model LibreriaFJDR.Models.Carrito
+@{
+    string iduser = User.Identity.GetUserId();
+    LogicaCarrito logicaCarrito = new LogicaCarrito();
+    List<Libro> productos = logicaCarrito.ObtenerProductos(iduser);
+}
+<head>
+    <link rel="stylesheet" href="~/Content/StyleCarrito.css" />
+</head>
+
+<h2>Carrito</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Print", "Home", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+            {
+                <div class="form-group">
+                    <div class="miFormulario">
+                        <div>@Html.TextBox("direccion", "direccion", new { @class = "form-control" })</div>
+                        <div><input type="submit" value="Realizar Compra" class="btn btn-default" style=" border: 1px solid black;" /></div>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+<table style=" width: 100%;">
+
+    <tr>
+        <th>PORTADA</th>
+        <th>ISBN</th>
+        <th>TITULO</th>
+        <th>AUTOR</th>
+        <th>PRECIO</th>
+        <th>UNIDADES</th>
+        <th>PRECIO TOTAL</th>
+        <th>OPERACIONES</th>
+    </tr>
+
+    @foreach (Libro item in productos)
+    {
+        <tr>
+            <td><img src=@item.IMG /></td>
+            <td>@item.ISBN</td>
+            <td>@item.Titulo</td>
+            <td>@item.Autor</td>
+            <td>@item.Precio €</td>
+            <td>@logicaCarrito.ObtenerCantidad(iduser, item.ISBN)</td>
+
+            @{
+                float precioTotal = item.Precio * @logicaCarrito.ObtenerCantidad(iduser, item.ISBN);
+            }
+            <td class="precioTotal">@precioTotal €</td>
+
+            <td class="operaciones">
+
+                @using (Html.BeginForm("SumarCantidad", "Carrito", FormMethod.Get))
+                {
+                    @Html.Hidden("isbn", item.ISBN)
+                    <input type="submit" value="+" />
+                }
+                @using (Html.BeginForm("RestarCantidad", "Carrito", FormMethod.Get))
+                {
+                    @Html.Hidden("isbn", item.ISBN)
+                    <input type="submit" value="-" />
+                }
+                @using (Html.BeginForm("QuitarProducto", "Carrito", FormMethod.Get))
+                {
+                    @Html.Hidden("isbn", item.ISBN)
+                    <input type="submit" value="Quitar Producto" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
