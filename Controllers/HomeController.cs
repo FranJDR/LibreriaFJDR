@@ -35,22 +35,24 @@ namespace LibreriaFJDR.Controllers
             return View();
         }
 
-        public ActionResult ImprimeFactura(string user, string email,string direccion)
+        public ActionResult ImprimeFactura(string direccion, string user, string email)
         {
-            ViewBag.user = user;
-            ViewBag.email = email;
-            ViewBag.direccion = direccion;
+            Factura factura = new Factura(user);
+            factura.Email = email;
+            factura.Direccion = direccion;
+            ViewBag.factura = factura;
+            new LogicaCarrito().VaciarCarrito(user);
             return View();
         }
 
         public ActionResult Print(string direccion)
         {
-            string email = User.Identity.Name;
+
             return new ActionAsPdf("ImprimeFactura", new
             {
+                direccion = direccion,
                 user = User.Identity.GetUserId(),
-                email = email,
-                direccion = direccion
+                email = User.Identity.Name
             })
             { FileName = "factura.pdf" };
         }

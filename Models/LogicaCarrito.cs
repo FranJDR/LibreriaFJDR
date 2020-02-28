@@ -62,11 +62,13 @@ namespace LibreriaFJDR.Models
         {
             using (DataService db = new DataService())
             {
-                foreach (Carrito carrito in this.ObtenerCarritos(idUser).ToList())
+                List<Carrito> carritos = this.ObtenerCarritos(idUser).ToList();
+                foreach (Carrito carrito in carritos)
                 {
-                    db.Carritos.Remove(carrito);
+                    db.Entry(carrito).State = EntityState.Deleted;
+                    //db.Carritos.Remove(carrito);
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
             }
         }
 

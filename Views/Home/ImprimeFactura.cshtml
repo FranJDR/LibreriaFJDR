@@ -3,10 +3,9 @@
 
 @{
     Layout = null;
-    string user = ViewBag.user;
-    string email = ViewBag.email;
-    string direccion = ViewBag.direccion;
-    Factura factura = new Factura(user);
+    Factura factura = ViewBag.factura;
+    System.Diagnostics.Debug.WriteLine(factura.Email);
+    System.Diagnostics.Debug.WriteLine(factura.Direccion);
 }
 
 <head>
@@ -37,8 +36,8 @@
 <br />
 <br />
 
-<div> Cliente : @email</div>
-<div> Direccion : @direccion</div>
+<div> Cliente : @factura.Email </div>
+<div> Direccion : @factura.Direccion </div>
 <div><label class="col-md-2 control-label">Precio total de la factura : @factura.PrecioTotal € </label></div>
 
 <table style=" width: 100% ">
