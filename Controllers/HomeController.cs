@@ -35,24 +35,35 @@ namespace LibreriaFJDR.Controllers
             return View();
         }
 
-        public ActionResult ImprimeFactura(string direccion, string user, string email)
+        public ActionResult ImprimeFactura(
+            string direccion,
+            string user,
+            string email,
+            string nombre,
+            string formaPago)
         {
-            Factura factura = new Factura(user);
-            factura.Email = email;
-            factura.Direccion = direccion;
+            Factura factura = new Factura(user)
+            {
+                Email = email,
+                Direccion = direccion,
+                Nombre = nombre,
+                FormaPago = formaPago
+            };
             ViewBag.factura = factura;
             new LogicaCarrito().VaciarCarrito(user);
             return View();
         }
 
-        public ActionResult Print(string direccion)
+        public ActionResult Print(string direccion, string nombre, string formaPago)
         {
 
             return new ActionAsPdf("ImprimeFactura", new
             {
                 direccion = direccion,
                 user = User.Identity.GetUserId(),
-                email = User.Identity.Name
+                email = User.Identity.Name,
+                nombre = nombre,
+                formaPago = formaPago
             })
             { FileName = "factura.pdf" };
         }
@@ -65,7 +76,7 @@ namespace LibreriaFJDR.Controllers
                 string idUser = User.Identity.GetUserId();
                 new LogicaCarrito().AgregarProducto(idUser, isbn);
             }
-            return View("Index");
+            return RedirectToAction("Index", "Home");
         }
 
     }

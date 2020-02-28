@@ -4,14 +4,11 @@
 @{
     Layout = null;
     Factura factura = ViewBag.factura;
-    System.Diagnostics.Debug.WriteLine(factura.Email);
-    System.Diagnostics.Debug.WriteLine(factura.Direccion);
 }
 
 <head>
     <link rel="stylesheet" href="~/Content/StyleCarrito.css" />
     <style>
-        /* SOLUCIONA PROBLEMA DE SOLAPAMIENTO EN TABLAS <table /> */
         thead {
             display: table-header-group
         }
@@ -26,7 +23,7 @@
 
         * {
             font-family: monospace;
-            font-size: 14px;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -36,10 +33,12 @@
 <br />
 <br />
 
-<div> Cliente : @factura.Email </div>
-<div> Direccion : @factura.Direccion </div>
-<div><label class="col-md-2 control-label">Precio total de la factura : @factura.PrecioTotal € </label></div>
-
+<div style="color: blue"> CIF : @factura.CIF </div>
+<div style="color: blue"> Nombre : @factura.Nombre </div>
+<div style="color: blue"> Cliente : @factura.Email </div>
+<div style="color: blue"> Direccion : @factura.Direccion </div>
+<div style="color: blue"> Forma de pago : @factura.FormaPago </div>
+<hr />
 <table style=" width: 100% ">
 
     <tr>
@@ -64,10 +63,20 @@
             @{
                 float preciototal = factura.ObtenerCantidad(item.ISBN) * item.Precio;
             }
-            <td class="precioTotal">@preciototal</td>
+            <td class="precioTotal">@preciototal€</td>
 
         </tr>
     }
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>TOTAL => </td>
+        <td style="color: orangered">@factura.PrecioTotal€</td>
+
+    </tr>
 
 </table>
 

@@ -5,6 +5,10 @@
     string iduser = User.Identity.GetUserId();
     LogicaCarrito logicaCarrito = new LogicaCarrito();
     List<Libro> productos = logicaCarrito.ObtenerProductos(iduser);
+    List<SelectListItem> formasPago = new List<SelectListItem>();
+    formasPago.Add(new SelectListItem() { Text = "Contrareembolso " });
+    formasPago.Add(new SelectListItem() { Text = "Tarjetas de crédito" });
+    formasPago.Add(new SelectListItem() { Text = "Transferencia electrónica" });
 }
 <head>
     <link rel="stylesheet" href="~/Content/StyleCarrito.css" />
@@ -20,7 +24,13 @@
                 <div class="form-group">
                     <div class="miFormulario">
                         <div>@Html.TextBox("direccion", "direccion", new { @class = "form-control" })</div>
+                        <div>@Html.TextBox("nombre", "NombreApellidos", new { @class = "form-control" })</div>
                         <div><input type="submit" value="Realizar Compra" class="btn btn-default" style=" border: 1px solid black;" /></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="miFormulario">
+                        @Html.DropDownList("formaPago", (List<SelectListItem>)formasPago, new { @class = "form-control" })
                     </div>
                 </div>
             }
