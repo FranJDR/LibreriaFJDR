@@ -7,6 +7,10 @@
     height: 100px;
 }
 
+*{
+    font-family: monospace;
+}
+
 th {
     text-align: center;
     font-family: monospace;
@@ -46,4 +50,8 @@ img {
 
     .miFormulario div {
         margin: 5px;
+    }
+    .miFormulario input{
+        margin: 10px;
+        font-size: 16px;
     }

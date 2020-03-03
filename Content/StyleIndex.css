@@ -1,10 +1,15 @@
 ﻿.contenedorCard {
     margin-top: 500px;
-    width: 90%;
+    width: 80%;
+    height: 500px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin: auto;
+}
+
+* {
+    font-family: monospace;
 }
 
 .flex-container {
@@ -57,9 +62,14 @@
     height: 100%;
 }
 
+    .contenido div {
+        font-size: 16px;
+    }
+
     .contenido p {
         overflow: auto;
         height: 200px;
+        font-size: 16px;
     }
 
     .contenido h4 {
@@ -69,3 +79,13 @@
     .contenido hr {
         border: 2px solid #fc9;
     }
+
+.contenedorSearch {
+    position: fixed;
+    margin-top: 30px;
+    max-width: 200px;
+    height: 40px;
+    left: 20px;
+    display: flex;
+    font-size: 14px;
+}

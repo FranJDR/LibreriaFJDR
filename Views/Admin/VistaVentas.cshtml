@@ -1,0 +1,35 @@
+﻿@using LibreriaFJDR.Models;
+@{
+    List<Venta> ventas = new LogicaVenta().ObtenerVentas();
+}
+<head>
+    <link rel="stylesheet" href="~/Content/StyleFormatoEstado.css" />
+</head>
+<h2>Ventas</h2>
+
+<table style=" width: 100% ">
+
+    <tr>
+        <th>EMAIL</th>
+        <th>DNI</th>
+        <th>NOMBRE</th>
+        <th>DIRECCION</th>
+        <th>FORMA DE PAGO</th>
+        <th>PRECIO FACTURA</th>
+        <th>FECHA</th>
+    </tr>
+
+    @foreach (Venta item in ventas)
+    {
+        <tr>
+            <td>@item.Email</td>
+            <td>@item.DNI</td>
+            <td>@item.Nombre</td>
+            <td>@item.Direccion</td>
+            <td>@item.FormaPago</td>
+            <td>@item.PrecioTotal €</td>
+            <td>@item.Fecha.ToString()</td>
+        </tr>
+    }
+
+</table>

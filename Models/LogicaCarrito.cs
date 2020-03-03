@@ -34,9 +34,12 @@ namespace LibreriaFJDR.Models
             Carrito carrito = this.ObtenerCarrito(idUser, ISBN);
             using (DataService db = new DataService())
             {
-                carrito.Cantidad--;
-                db.Entry(carrito).State = EntityState.Modified;
-                db.SaveChanges();
+                if (carrito.Cantidad != 1)
+                {
+                    carrito.Cantidad--;
+                    db.Entry(carrito).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -47,15 +50,7 @@ namespace LibreriaFJDR.Models
 
         public List<Libro> ObtenerProductos(string iduser)
         {
-            List<Libro> libros = new LogicaLibro().ObtenerLibros();
-            List<string> ISBNs = this.ObtenerISBNs(iduser);
-            List<Libro> retorno = new List<Libro>();
-            libros.ForEach((libro) =>
-            {
-                if (ISBNs.Contains(libro.ISBN))
-                    retorno.Add(libro);
-            });
-            return retorno;
+            return new LogicaLibro().ObtenerLibrosISBN(this.ObtenerISBNs(iduser));
         }
 
         public void VaciarCarrito(string idUser)
@@ -66,7 +61,6 @@ namespace LibreriaFJDR.Models
                 foreach (Carrito carrito in carritos)
                 {
                     db.Entry(carrito).State = EntityState.Deleted;
-                    //db.Carritos.Remove(carrito);
                     db.SaveChanges();
                 }
             }
@@ -85,7 +79,6 @@ namespace LibreriaFJDR.Models
                     db.SaveChanges();
                 }
             }
-
         }
 
         private List<string> ObtenerISBNs(string idUser)
@@ -98,55 +91,24 @@ namespace LibreriaFJDR.Models
             return ISBNs;
         }
 
-
         private Carrito ObtenerCarrito(string idUser, string isbn)
         {
             using (DataService db = new DataService())
             {
-                List<Carrito> listCarrito = db.Carritos.ToList();
-                if (listCarrito != null)
-                {
-                    foreach (Carrito carrito in listCarrito)
-                    {
-                        if (carrito.idUsuario == idUser && carrito.ISBN == isbn)
-                        {
-                            return carrito;
-                        }
-                    }
-                }
+                Carrito collection =
+                    db.Carritos.Where(a => a.idUsuario == idUser).Where(a => a.ISBN == isbn).FirstOrDefault();
+                return collection;
             }
-            return null;
         }
 
         private List<Carrito> ObtenerCarritos(string idUser)
         {
-            List<Carrito> retorno = new List<Carrito>();
             using (DataService db = new DataService())
             {
-                foreach (Carrito carrito in db.Carritos.ToList())
-                {
-                    if (carrito.idUsuario == idUser)
-                    {
-                        retorno.Add(carrito);
-                    }
-                }
+                List<Carrito> collection = db.Carritos.Where(o => o.idUsuario == idUser).ToList();
+                return collection;
             }
-            return retorno;
         }
-
-        private List<Int32> ObtenerListID()
-        {
-            List<Int32> retorno = new List<int>();
-            using (DataService db = new DataService())
-            {
-                foreach (Carrito carrito in db.Carritos.ToList())
-                {
-                    retorno.Add(carrito.ID);
-                }
-            }
-            return retorno;
-        }
-
 
     }
 }

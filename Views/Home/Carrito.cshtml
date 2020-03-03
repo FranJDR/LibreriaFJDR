@@ -4,8 +4,10 @@
 @{
     string iduser = User.Identity.GetUserId();
     LogicaCarrito logicaCarrito = new LogicaCarrito();
+    LogicaLibro logicaLibro = new LogicaLibro();
     List<Libro> productos = logicaCarrito.ObtenerProductos(iduser);
     List<SelectListItem> formasPago = new List<SelectListItem>();
+    Factura factura = new Factura(iduser);
     formasPago.Add(new SelectListItem() { Text = "Contrareembolso " });
     formasPago.Add(new SelectListItem() { Text = "Tarjetas de crédito" });
     formasPago.Add(new SelectListItem() { Text = "Transferencia electrónica" });
@@ -23,9 +25,13 @@
             {
                 <div class="form-group">
                     <div class="miFormulario">
-                        <div>@Html.TextBox("direccion", "direccion", new { @class = "form-control" })</div>
-                        <div>@Html.TextBox("nombre", "NombreApellidos", new { @class = "form-control" })</div>
-                        <div><input type="submit" value="Realizar Compra" class="btn btn-default" style=" border: 1px solid black;" /></div>
+                        <input type="search" placeholder="Direccion" name="direccion" style="border-radius: 15px; border: 2px solid orange" />
+                        <input type="search" placeholder="NombreApellidos" name="nombre" style="border-radius: 15px; border: 2px solid orange" />
+                        <input type="search" placeholder="DNI" name="dni" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" style="border-radius: 15px; border: 2px solid orange" />
+                        @if (logicaLibro.ValidarStock(factura.ISBNCantidad))
+                        {
+                            <div><input type="submit" value="Realizar Compra" class="btn btn-default" style=" border: 1px solid black;" /></div>
+                        }
                     </div>
                 </div>
                 <div class="form-group">
@@ -59,10 +65,18 @@
             <td>@item.Titulo</td>
             <td>@item.Autor</td>
             <td>@item.Precio €</td>
-            <td>@logicaCarrito.ObtenerCantidad(iduser, item.ISBN)</td>
 
             @{
                 float precioTotal = item.Precio * @logicaCarrito.ObtenerCantidad(iduser, item.ISBN);
+            }
+
+            @if (logicaCarrito.ObtenerCantidad(iduser, item.ISBN) <= logicaLibro.ObtenerCantidad(item.ISBN))
+            {
+                <td style="color:forestgreen">@logicaCarrito.ObtenerCantidad(iduser, item.ISBN)</td>
+            }
+            else
+            {
+                <td style="color:red">@logicaCarrito.ObtenerCantidad(iduser, item.ISBN)/@logicaLibro.ObtenerCantidad(item.ISBN)</td>
             }
             <td class="precioTotal">@precioTotal €</td>
 

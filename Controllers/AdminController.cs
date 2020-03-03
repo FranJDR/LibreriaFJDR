@@ -39,11 +39,14 @@ namespace LibreriaFJDR.Controllers
             return View("AgregarLibro");
         }
 
-        public ActionResult EditarLibro(Libro libro, string isbn, string estado, string formato)
+        public ActionResult EditarLibro(string isbn, int precio, int unidades)
         {
-            libro.ISBN = isbn;
-            libro.Estado = estado;
-            libro.Formato = formato;
+            Libro libro = new Libro()
+            {
+                ISBN = isbn,
+                Precio = precio,
+                Unidades = unidades
+            };
             this.datos.EditarLibro(libro);
             return RedirectToAction("Admin", "Home");
         }
@@ -90,6 +93,12 @@ namespace LibreriaFJDR.Controllers
         public ActionResult RedirigirVistaFormato()
         {
             return View(this.rutaVistaFormato);
+        }
+
+        /*------------------------------VENTAS------------------------------*/
+        public ActionResult RedirigirVistaVentas()
+        {
+            return View("VistaVentas");
         }
     }
 }

@@ -18,6 +18,8 @@ namespace LibreriaFJDR.Models
         public string CIF { get; set; }
         public string FormaPago { get; set; }
         public DateTime Fecha { get; set; }
+        public string DNI { get; set; }
+
 
         public Factura(string idUsuario)
         {

@@ -21,7 +21,7 @@ namespace LibreriaFJDR.Models
         [Required]
         public int Paginas { get; set; }
         [Required]
-        public string Unidades { get; set; }
+        public int Unidades { get; set; }
         [Required]
         public float Precio { get; set; }
         [Required]

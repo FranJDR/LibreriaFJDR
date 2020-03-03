@@ -2,9 +2,9 @@
 @{
     List<Libro> libros = new LogicaLibro().ObtenerLibros();
 }
-<head>
-    <link rel="stylesheet" href="~/Content/StyleAdmin.css" />
-</head>
+    <head>
+        <link rel="stylesheet" href="~/Content/StyleAdmin.css" />
+    </head>
 
 <br />
 <div style="display: flex">
@@ -19,6 +19,10 @@
     @using (Html.BeginForm("RedirigirVistaFormato", "Admin", FormMethod.Get))
     {
         <input type="submit" value="FORMATO" class="btn btn-default" style="margin:5px;border: 1px solid black" />
+    }
+    @using (Html.BeginForm("RedirigirVistaVentas", "Admin", FormMethod.Get))
+    {
+        <input type="submit" value="VENTAS" class="btn btn-default" style="margin:5px;border: 1px solid black" />
     }
 </div>
 <hr />

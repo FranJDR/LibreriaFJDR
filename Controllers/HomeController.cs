@@ -14,8 +14,18 @@ namespace LibreriaFJDR.Controllers
     public class HomeController : Controller
     {
 
-        public ActionResult Index()
+        public ActionResult Index(string isbn)
         {
+            List<Libro> libros = new List<Libro>();
+            if (string.IsNullOrEmpty(isbn))
+            {
+                libros = new LogicaLibro().ObtenerLibros();
+            }
+            else
+            {
+                libros = new LogicaLibro().ObtenerLibrosISBN(isbn);
+            }
+            ViewBag.libros = libros;
             return View();
         }
 
@@ -40,21 +50,37 @@ namespace LibreriaFJDR.Controllers
             string user,
             string email,
             string nombre,
-            string formaPago)
+            string formaPago,
+            string dni)
         {
             Factura factura = new Factura(user)
             {
                 Email = email,
                 Direccion = direccion,
                 Nombre = nombre,
-                FormaPago = formaPago
+                FormaPago = formaPago,
+                DNI = dni
             };
+
+            Venta venta = new Venta()
+            {
+                Direccion = direccion,
+                Nombre = nombre,
+                Email = email,
+                PrecioTotal = factura.PrecioTotal,
+                Fecha = DateTime.Now,
+                FormaPago = formaPago,
+                DNI = dni
+            };
+
             ViewBag.factura = factura;
+            new LogicaVenta().AgregarVenta(venta);
+            new LogicaLibro().ReducirStock(factura.ISBNCantidad);
             new LogicaCarrito().VaciarCarrito(user);
             return View();
         }
 
-        public ActionResult Print(string direccion, string nombre, string formaPago)
+        public ActionResult Print(string direccion, string nombre, string formaPago, string dni)
         {
 
             return new ActionAsPdf("ImprimeFactura", new
@@ -63,11 +89,11 @@ namespace LibreriaFJDR.Controllers
                 user = User.Identity.GetUserId(),
                 email = User.Identity.Name,
                 nombre = nombre,
-                formaPago = formaPago
+                formaPago = formaPago,
+                dni = dni
             })
             { FileName = "factura.pdf" };
         }
-
 
         public ActionResult AgregarCarrito(string isbn)
         {

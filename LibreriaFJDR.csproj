@@ -197,13 +197,14 @@
     <Compile Include="Models\LogicaCarrito.cs" />
     <Compile Include="Models\LogicaEstado.cs" />
     <Compile Include="Models\LogicaFormato.cs" />
+    <Compile Include="Models\LogicaVenta.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Estado.cs" />
     <Compile Include="Models\Formato.cs" />
     <Compile Include="Models\Libro.cs" />
     <Compile Include="Models\DataService.cs" />
     <Compile Include="Models\LogicaLibro.cs" />
-    <Compile Include="Models\Tema.cs" />
+    <Compile Include="Models\Venta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -217,6 +218,7 @@
     <Content Include="Content\StyleIndex.css" />
     <Content Include="Content\StyleAdmin.css" />
     <Content Include="Content\StyleFormatoEstado.css" />
+    <Content Include="Content\StyleSearch.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -225,6 +227,7 @@
     <Content Include="img\imgCarrito.png" />
     <Content Include="img\imgAdmin.png" />
     <Content Include="img\logo.png" />
+    <Content Include="img\lupa.png" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe">
@@ -289,6 +292,7 @@
     <Content Include="Views\Admin\VistaFormato.cshtml" />
     <Content Include="Views\Home\Carrito.cshtml" />
     <Content Include="Views\Home\ImprimeFactura.cshtml" />
+    <Content Include="Views\Admin\VistaVentas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
