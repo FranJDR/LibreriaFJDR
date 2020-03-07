@@ -11,38 +11,41 @@
     formasPago.Add(new SelectListItem() { Text = "Contrareembolso " });
     formasPago.Add(new SelectListItem() { Text = "Tarjetas de crédito" });
     formasPago.Add(new SelectListItem() { Text = "Transferencia electrónica" });
+    DatosUsuario datos = new LogicaDatosUsuario().ObtenerDatos(iduser);
 }
 <head>
     <link rel="stylesheet" href="~/Content/StyleCarrito.css" />
 </head>
 
-<h2>Carrito</h2>
 
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Print", "Home", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+@if (datos == null)
+{
+    @Html.ActionLink("No se han encontrado datos, son obligatorios para poder realizar la compra.", "MiCuenta", "Home", routeValues: null, htmlAttributes: new { id = "loginLink" })
+}
+else
+{
+    using (Html.BeginForm("Print", "Home"))
+    {
+        <div  style="display: flex; width:100%; align-items: baseline">
+
+            <label>Direccion : @datos.Direccion</label>
+            <label>Nombre : @datos.Nombre @datos.Apellidos</label>
+            <label>DNI : @datos.DNI</label>
+            <label>Telefono : @datos.Telefono</label>
+            @Html.DropDownList("formaPago", (List<SelectListItem>)formasPago, new { @class = "form-control" })
+            @if (logicaLibro.ValidarStock(factura.ISBNCantidad))
             {
-                <div class="form-group">
-                    <div class="miFormulario">
-                        <input type="search" placeholder="Direccion" name="direccion" style="border-radius: 15px; border: 2px solid orange" />
-                        <input type="search" placeholder="NombreApellidos" name="nombre" style="border-radius: 15px; border: 2px solid orange" />
-                        <input type="search" placeholder="DNI" name="dni" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" style="border-radius: 15px; border: 2px solid orange" />
-                        @if (logicaLibro.ValidarStock(factura.ISBNCantidad))
-                        {
-                            <div><input type="submit" value="Realizar Compra" class="btn btn-default" style=" border: 1px solid black;" /></div>
-                        }
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="miFormulario">
-                        @Html.DropDownList("formaPago", (List<SelectListItem>)formasPago, new { @class = "form-control" })
-                    </div>
-                </div>
+                @Html.Hidden("direccion", datos.Direccion)
+                @Html.Hidden("nombre", datos.Nombre, datos.Apellidos)
+                @Html.Hidden("dni", datos.DNI)
+                @Html.Hidden("telefono", datos.Telefono)
+                <input type="submit" value="Realizar Compra" class="btn btn-default" style="margin-top: 10px; border: 1px solid black;" />
             }
-        </section>
-    </div>
-</div>
+        </div>
+    }
+}
+
+
 
 <table style=" width: 100%;">
 
@@ -85,12 +88,12 @@
                 @using (Html.BeginForm("SumarCantidad", "Carrito", FormMethod.Get))
                 {
                     @Html.Hidden("isbn", item.ISBN)
-                    <input type="submit" value="+" />
+                    <input type="submit" style="width:30px" value="+" />
                 }
                 @using (Html.BeginForm("RestarCantidad", "Carrito", FormMethod.Get))
                 {
                     @Html.Hidden("isbn", item.ISBN)
-                    <input type="submit" value="-" />
+                    <input type="submit" style="width:30px" value="-" />
                 }
                 @using (Html.BeginForm("QuitarProducto", "Carrito", FormMethod.Get))
                 {
@@ -102,6 +105,7 @@
     }
 
 </table>
+
 
 
 @section Scripts {

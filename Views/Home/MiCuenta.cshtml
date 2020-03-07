@@ -1,0 +1,149 @@
+﻿@using LibreriaFJDR.Models;
+@model LibreriaFJDR.Models.DatosUsuario
+@{
+    DatosUsuario datos = ViewBag.datos;
+}
+
+<head>
+    @*<link rel="stylesheet" href="~/Content/StyleFormatoEstado.css" />*@
+    <link rel="stylesheet" href="~/Content/StyleHeader.css" />
+</head>
+
+@if (datos == null)
+{
+    <div class="row" style="width:100%">
+        <div class="col-md-8">
+            <section id="loginForm">
+                @using (Html.BeginForm("AgregarDatosUsuario", "Home", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <h1>No se ha encontrado datos.</h1>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DNI, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.DNI, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.DNI, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Apellidos, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Apellidos, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Apellidos, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Direccion, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Direccion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Telefono, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Telefono, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Crear" class="btn btn-default" />
+                        </div>
+                    </div>
+
+                }
+            </section>
+        </div>
+    </div>
+}
+else
+{
+
+    <table style=" width: 100% ">
+
+        <tr>
+            <th><h1>DATOS</h1></th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <td>DNI : @datos.DNI</td>
+            <td>
+                @using (Html.BeginForm("ModificarDNI", "DatosUsuario", FormMethod.Get))
+                {
+                    @Html.Hidden("id", datos.IdUser)
+                    <input type="text" placeholder="DNI" name="dni" style="border-radius: 15px; border: 2px solid orange" />
+                    <input type="submit" value="MODIFICAR" />
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Nombre : @datos.Nombre</td>
+            <td>
+                @using (Html.BeginForm("ModificarNombre", "DatosUsuario", FormMethod.Get))
+                {
+                    @Html.Hidden("id", datos.IdUser)
+                    <input type="text" placeholder="Nombre" name="nombre" style="border-radius: 15px; border: 2px solid orange" />
+                    <input type="submit" value="MODIFICAR" />
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Apellidos : @datos.Apellidos</td>
+            <td>
+                @using (Html.BeginForm("ModificarApellidos", "DatosUsuario", FormMethod.Get))
+                {
+                    @Html.Hidden("id", datos.IdUser)
+                    <input type="text" placeholder="Apellidos" name="apellido" style="border-radius: 15px; border: 2px solid orange" />
+                    <input type="submit" value="MODIFICAR" />
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Direccion : @datos.Direccion</td>
+            <td>
+                @using (Html.BeginForm("ModificarDireccion", "DatosUsuario", FormMethod.Get))
+                {
+                    @Html.Hidden("id", datos.IdUser)
+                    <input type="text" placeholder="Direccion" name="direccion" style="border-radius: 15px; border: 2px solid orange" />
+                    <input type="submit" value="MODIFICAR" />
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Telefono : @datos.Telefono</td>
+            <td>
+                @using (Html.BeginForm("ModificarTelefono", "DatosUsuario", FormMethod.Get))
+                {
+                    @Html.Hidden("id", datos.IdUser)
+                    <input type="number" placeholder="Telefono" name="direccion" style="border-radius: 15px; border: 2px solid orange" />
+                    <input type="submit" value="MODIFICAR" />
+                }
+            </td>
+        </tr>
+
+    </table>
+
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

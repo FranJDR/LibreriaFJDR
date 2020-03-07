@@ -13,6 +13,7 @@ namespace LibreriaFJDR.Models
         public DbSet<Formato> Formatos { get; set; }
         public DbSet<Carrito> Carritos { get; set; }
         public DbSet<Venta> Ventas { get; set; }
+        public DbSet<DatosUsuario> DatosUsuarios { get; set; }
 
         public DataService() : base("DefaultConnection")
         {

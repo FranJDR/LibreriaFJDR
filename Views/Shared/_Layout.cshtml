@@ -1,61 +1,105 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
+    <link rel="stylesheet" href="~/Content/StyleHeader.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link rel="stylesheet" href="~/Content/StyleHeader.css" />
+    @using Microsoft.AspNet.Identity
 </head>
 
-<body>
-    <header class="header">
-        <div class="miContainer logo-nav-container">
-            <a href="/Home/Index" class="logo"><img class="logo" title="Book Shop" style="width:100px;height:75px" src="~/img/logo.png" /></a>
-            <nav class="navigation">
-                <ul>
+<body style="height:100%">
+    <div class="wrapper">
+        <div class="sidebar">
+            <h2 style="color: black">BOOK SHOP</h2>
+            @*<img src="~/img/logo.png" style="width:150px; height: 100px;" />*@
+            <ul>
+                <a style="color:black" href="/Home/Index">
                     <li>
-                        <a href="/Home/Index">
-                            <img class="miImg" title="Catalogo" src="~/img/imgBook.jpg" />
-                            <label>CATALOGO</label>
-                        </a>
+                        <img class="miImg" title="Carrito" src="~/img/imgBook.png" />
+                        <label style="text-align:center">Catalogo</label>
                     </li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
+                </a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a style="color:black" href="/Home/Carrito">
                         <li>
-                            <a href="/Home/Carrito">
-                                <img class="miImg" title="Carrito" src="~/img/imgCarrito.png" />
-                                <label>CARRITO</label>
-                            </a>
+                            <img class="miImg" title="Carrito" src="~/img/imgCarrito.png" />
+                            <label style="text-align:center">Carrito</label>
                         </li>
-                    }
-                    @if (User.IsInRole("admin"))
-                    {
+                    </a>
+
+                    <a style="color:black" href="/Home/MiCuenta">
                         <li>
-                            <a href="/Home/Admin">
-                                <img class="miImg" title="Admin" src="~/img/imgAdmin.png" />
-                                <label>ADMINISTRADOR</label>
-                            </a>
+                            <img class="miImg" title="Carrito" src="~/img/imgUser.png" />
+                            <label style="text-align:center">Mis Datos</label>
                         </li>
+                    </a>
+                }
+                @if (User.IsInRole("admin"))
+                {
+                    <a style="color:black" href="/Home/Admin">
+                        <li>
+                            <img class="miImg" title="Carrito" src="~/img/imgAdmin.png" />
+                            <label style="text-align:center">Admin</label>
+                        </li>
+                    </a>
+                }
+
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+
+                        @Html.AntiForgeryToken()
+                        <a style="color:black" href="/Manage/Index">
+                            <li>
+                                <img class="miImg" title="Carrito" src="~/img/email.png" />
+                                <label style="text-align:center">@User.Identity.GetUserName()</label>
+                            </li>
+                        </a>
+
+                        <a style="color:black" href="javascript:document.getElementById('logoutForm').submit()">
+                            <li>
+                                <img class="miImg" title="Carrito" src="~/img/salir.png" />
+                                <label style="text-align:center">Cerrar sesión</label>
+                            </li>
+                        </a>
                     }
-                </ul>
-            </nav>
-                    @Html.Partial("_LoginPartial")
+                }
+                else
+                {
+                    <a style="color:black" href="/Account/Register">
+                        <li>
+                            <img class="miImg" title="Carrito" src="~/img/imgUser.png" />
+                            <label style="text-align:center">Registrarse</label>
+                        </li>
+                    </a>
+                    <a style="color:black" href="/Account/Login">
+                        <li>
+                            <img class="miImg" title="Carrito" src="~/img/imgUser.png" />
+                            <label style="text-align:center">Iniciar sesión</label>
+                        </li>
+                    </a>
+                }
+
+            </ul>
+            @*@Html.Partial("_LoginPartial")*@
         </div>
-    </header>
+        <div class="main_content">
+            @*<div class="header">CATALAGO</div>*@
+            <div class="info">
+                @RenderBody()
+            </div>
+        </div>
 
-    <div class="container body-content">
-        @RenderBody()
-        @*<hr />*@
-        @*<footer>
-                <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET / Francisco Javier Delgado Romero</p>
-            </footer>*@
-    </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 </html>

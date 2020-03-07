@@ -29,6 +29,21 @@ namespace LibreriaFJDR.Controllers
             return View();
         }
 
+        public ActionResult MiCuenta()
+        {
+            string IdUser = User.Identity.GetUserId();
+            ViewBag.datos = new LogicaDatosUsuario().ObtenerDatos(IdUser);
+            return View();
+        }
+
+        public ActionResult AgregarDatosUsuario(DatosUsuario datos)
+        {
+            string IdUser = User.Identity.GetUserId();
+            datos.IdUser = IdUser;
+            new LogicaDatosUsuario().CrearDatosUsuario(datos);
+            return RedirectToAction("MiCuenta", "Home");
+        }
+
         [Authorize(Roles = "admin")]
         public ActionResult Admin()
         {
@@ -37,11 +52,6 @@ namespace LibreriaFJDR.Controllers
 
         public ActionResult Carrito()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-
-                System.Diagnostics.Debug.WriteLine("ISUARIO => " + User.Identity.Name);
-            }
             return View();
         }
 
@@ -51,7 +61,8 @@ namespace LibreriaFJDR.Controllers
             string email,
             string nombre,
             string formaPago,
-            string dni)
+            string dni,
+            string telefono)
         {
             Factura factura = new Factura(user)
             {
@@ -59,7 +70,8 @@ namespace LibreriaFJDR.Controllers
                 Direccion = direccion,
                 Nombre = nombre,
                 FormaPago = formaPago,
-                DNI = dni
+                DNI = dni,
+                Telefono = telefono
             };
 
             Venta venta = new Venta()
@@ -80,7 +92,7 @@ namespace LibreriaFJDR.Controllers
             return View();
         }
 
-        public ActionResult Print(string direccion, string nombre, string formaPago, string dni)
+        public ActionResult Print(string direccion, string nombre, string formaPago, string dni, string telefono)
         {
 
             return new ActionAsPdf("ImprimeFactura", new
@@ -90,7 +102,8 @@ namespace LibreriaFJDR.Controllers
                 email = User.Identity.Name,
                 nombre = nombre,
                 formaPago = formaPago,
-                dni = dni
+                dni = dni,
+                telefono = telefono
             })
             { FileName = "factura.pdf" };
         }

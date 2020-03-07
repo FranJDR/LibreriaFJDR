@@ -192,9 +192,11 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Carrito.cs" />
     <Compile Include="Models\Compra.cs" />
+    <Compile Include="Models\DatosUsuario.cs" />
     <Compile Include="Models\Factura.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LogicaCarrito.cs" />
+    <Compile Include="Models\LogicaDatosUsuario.cs" />
     <Compile Include="Models\LogicaEstado.cs" />
     <Compile Include="Models\LogicaFormato.cs" />
     <Compile Include="Models\LogicaVenta.cs" />
@@ -223,11 +225,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="img\imgBook.jpg" />
+    <Content Include="img\email.png" />
+    <Content Include="img\imgBook.png" />
     <Content Include="img\imgCarrito.png" />
     <Content Include="img\imgAdmin.png" />
+    <Content Include="img\imgUser.png" />
     <Content Include="img\logo.png" />
     <Content Include="img\lupa.png" />
+    <Content Include="img\salir.png" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe">
@@ -293,6 +298,7 @@
     <Content Include="Views\Home\Carrito.cshtml" />
     <Content Include="Views\Home\ImprimeFactura.cshtml" />
     <Content Include="Views\Admin\VistaVentas.cshtml" />
+    <Content Include="Views\Home\MiCuenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -337,6 +343,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
+      <UserProperties content_4bootstrap_1min_1css_1map__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

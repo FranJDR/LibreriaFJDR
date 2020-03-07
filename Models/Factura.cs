@@ -19,6 +19,7 @@ namespace LibreriaFJDR.Models
         public string FormaPago { get; set; }
         public DateTime Fecha { get; set; }
         public string DNI { get; set; }
+        public string Telefono { get; set; }
 
 
         public Factura(string idUsuario)
