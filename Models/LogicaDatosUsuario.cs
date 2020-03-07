@@ -29,6 +29,61 @@ namespace LibreriaFJDR.Models
             }
         }
 
+        public void ModifcarDNI(string id, string dni)
+        {
+            using (DataService db = new DataService())
+            {
+                DatosUsuario user = db.DatosUsuarios.Find(id);
+                user.DNI = dni;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        public void ModifcarNombre(string id, string nombre)
+        {
+            using (DataService db = new DataService())
+            {
+                DatosUsuario user = db.DatosUsuarios.Find(id);
+                user.Nombre = nombre;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        public void ModifcarApellidos(string id, string apellidos)
+        {
+            using (DataService db = new DataService())
+            {
+                DatosUsuario user = db.DatosUsuarios.Find(id);
+                user.Apellidos = apellidos;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        public void ModifcarTelefono(string id, string telefono)
+        {
+            using (DataService db = new DataService())
+            {
+                DatosUsuario user = db.DatosUsuarios.Find(id);
+                user.Telefono = telefono;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        public void ModifcarDireccion(string id, string direccion)
+        {
+            using (DataService db = new DataService())
+            {
+                DatosUsuario user = db.DatosUsuarios.Find(id);
+                user.Direccion = direccion;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
         public bool ExistenDatos(string IdUser)
         {
             using (DataService db = new DataService())

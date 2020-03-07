@@ -110,7 +110,7 @@ else
                 @using (Html.BeginForm("ModificarApellidos", "DatosUsuario", FormMethod.Get))
                 {
                     @Html.Hidden("id", datos.IdUser)
-                    <input type="text" placeholder="Apellidos" name="apellido" style="border-radius: 15px; border: 2px solid orange" />
+                    <input type="text" placeholder="Apellidos" name="apellidos" style="border-radius: 15px; border: 2px solid orange" />
                     <input type="submit" value="MODIFICAR" />
                 }
             </td>
@@ -132,7 +132,7 @@ else
                 @using (Html.BeginForm("ModificarTelefono", "DatosUsuario", FormMethod.Get))
                 {
                     @Html.Hidden("id", datos.IdUser)
-                    <input type="number" placeholder="Telefono" name="direccion" style="border-radius: 15px; border: 2px solid orange" />
+                    <input type="number" placeholder="Telefono" name="telefono" style="border-radius: 15px; border: 2px solid orange" />
                     <input type="submit" value="MODIFICAR" />
                 }
             </td>

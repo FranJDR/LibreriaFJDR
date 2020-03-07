@@ -26,10 +26,11 @@ else
 {
     using (Html.BeginForm("Print", "Home"))
     {
-        <div  style="display: flex; width:100%; align-items: baseline">
+        <div style="display: flex; width:100%; align-items: baseline">
 
             <label>Direccion : @datos.Direccion</label>
-            <label>Nombre : @datos.Nombre @datos.Apellidos</label>
+            <label>Nombre : @datos.Nombre</label>
+            <label>Apellidos : @datos.Apellidos</label>
             <label>DNI : @datos.DNI</label>
             <label>Telefono : @datos.Telefono</label>
             @Html.DropDownList("formaPago", (List<SelectListItem>)formasPago, new { @class = "form-control" })
